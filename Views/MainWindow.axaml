@@ -31,19 +31,30 @@
 	
 	<StackPanel Orientation="Vertical" HorizontalAlignment="Center">
 	
-		<TextBlock Text="Avalonia AutoCompleteBox Play" HorizontalAlignment="Center"/>	
+		<TextBlock Text="Avalonia AutoCompleteBox Play" FontSize="32" HorizontalAlignment="Center" Margin="16"/>
+		
+		<TextBlock FontSize="18" HorizontalAlignment="Center" Margin="16">
+			These AutoCompletes all have the MaterialOutlineAutoCompleteBox theme and AutoCompleteDropdownBehaviour applied.	
+		</TextBlock>
 	
+		<TextBlock FontSize="18" HorizontalAlignment="Center" Margin="16">
+			MaterialOutlineAutoCompleteBox: Provides missing outline theme for AutoCompleteBox
+		</TextBlock>
+		<TextBlock FontSize="18" HorizontalAlignment="Center" Margin="16">
+			AutoCompleteDropdownBehaviour: Provides clickable DropDown button to show all entries 
+		</TextBlock>
+		
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 		
-			<TextBlock Text="A) Populating+PopulateComplete :" Width="320" Padding="4" Margin="16" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+			<TextBlock Text="A) Simple Outline AutoCompleteBox (Working):" MaxLines="2" Width="320" Padding="4" Margin="16" VerticalAlignment="Center" HorizontalAlignment="Right"/>
 			
 			<AutoCompleteBox 
-				x:Name="autoComplete"
+				x:Name="autoCompleteA"
 				Width="320"
 				IsTextCompletionEnabled="True"
-				FilterMode="None"
-				SelectedItem="{Binding Selected, Mode=OneWay}"
-				SelectionChanged="OnSelectionChanged"
+				FilterMode="Contains"
+				SelectedItem="{Binding SelectedA}"
+				ItemsSource="{Binding MainVMs}"
 				Theme="{StaticResource MaterialOutlineAutoCompleteBox}"
 				assists:AutoCompleteBoxAssist.Label="Birds"
 				DropDownClosed="AutoComplete_OnDropDownClosed"
@@ -51,12 +62,8 @@
 				DropDownClosing="AutoComplete_OnDropDownClosing"
 				DropDownOpening="AutoComplete_OnDropDownOpening"
 				Populated="AutoComplete_OnPopulated"
-				Populating="AutoComplete_A_OnPopulating"
+				Populating="AutoComplete_OnPopulating"
 			>
-				<!--
-			AsyncPopulator="{Binding AutoCompletePopulator}"
-			-->
-			
 				<Interaction.Behaviors>
 					<behaviours:AutoCompleteDropdownBehaviour/>
 				</Interaction.Behaviors>
@@ -68,14 +75,116 @@
 				</AutoCompleteBox.ItemTemplate>
 			</AutoCompleteBox>
 		
-			<TextBlock Text="{Binding Selected.Thing.name}" Width="320" Padding="4" Margin="16" Background="LightGray" VerticalAlignment="Center"/>
+			<TextBlock Text="{Binding SelectedA.Thing.name}" Width="320" Padding="4" Margin="16" Background="LightGray" VerticalAlignment="Center"/>
 		
 			<Button 
+				x:Name="firstA"
 				Content="Set First"
 				Tapped="SetFirstTapped"
 				Margin="16"
 			/>
 			<Button 
+				x:Name="lastA"
+				Content="Set Last"
+				Tapped="SetLastTapped"
+				Margin="16"
+			/>
+			
+		</StackPanel>
+		
+		
+
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+	
+			<TextBlock Text="B) AutoCompleteBox AsyncPopulator (Not Working) :" Foreground="Red"  MaxLines="2" Width="320" Padding="4" Margin="16" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+		
+			<AutoCompleteBox 
+				x:Name="autoCompleteB"
+				Width="320"
+				IsTextCompletionEnabled="True"
+				FilterMode="None"
+				SelectedItem="{Binding SelectedB}"
+				Theme="{StaticResource MaterialOutlineAutoCompleteBox}"
+				assists:AutoCompleteBoxAssist.Label="Birds"
+				AsyncPopulator="{Binding AutoCompletePopulator}"
+				DropDownClosed="AutoComplete_OnDropDownClosed"
+				DropDownOpened="AutoComplete_OnDropDownOpened"
+				DropDownClosing="AutoComplete_OnDropDownClosing"
+				DropDownOpening="AutoComplete_OnDropDownOpening"
+				Populated="AutoComplete_OnPopulated"
+				Populating="AutoComplete_OnPopulating"
+			>
+				<Interaction.Behaviors>
+					<behaviours:AutoCompleteDropdownBehaviour/>
+				</Interaction.Behaviors>
+		
+				<AutoCompleteBox.ItemTemplate>
+					<DataTemplate x:DataType="models:ThingViewModel">
+						<TextBlock Text="{Binding Text}"/>							
+					</DataTemplate>
+				</AutoCompleteBox.ItemTemplate>
+			</AutoCompleteBox>
+	
+			<TextBlock Text="{Binding SelectedB.Thing.name}" Width="320" Padding="4" Margin="16" Background="LightGray" VerticalAlignment="Center"/>
+	
+			<Button 
+				x:Name="firstB"
+				Content="Set First"
+				Tapped="SetFirstTapped"
+				Margin="16"
+			/>
+			<Button 
+				x:Name="lastB"
+				Content="Set Last"
+				Tapped="SetLastTapped"
+				Margin="16"
+			/>
+		
+		</StackPanel>
+		
+		
+		
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+		
+			<TextBlock Text="C) Populating+PopulateComplete (Working) :" MaxLines="2" Width="320" Padding="4" Margin="16" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+			
+			<AutoCompleteBox 
+				x:Name="autoCompleteC"
+				Width="320"
+				IsTextCompletionEnabled="True"
+				FilterMode="None"
+				SelectedItem="{Binding SelectedC, Mode=OneWay}"
+				SelectionChanged="OnSelectionChanged"
+				Theme="{StaticResource MaterialOutlineAutoCompleteBox}"
+				assists:AutoCompleteBoxAssist.Label="Birds"
+				DropDownClosed="AutoComplete_OnDropDownClosed"
+				DropDownOpened="AutoComplete_OnDropDownOpened"
+				DropDownClosing="AutoComplete_OnDropDownClosing"
+				DropDownOpening="AutoComplete_OnDropDownOpening"
+				Populated="AutoComplete_OnPopulated"
+				Populating="AutoComplete_C_OnPopulating"
+			>
+				<Interaction.Behaviors>
+					<behaviours:AutoCompleteDropdownBehaviour/>
+				</Interaction.Behaviors>
+			
+				<AutoCompleteBox.ItemTemplate>
+					<DataTemplate x:DataType="models:ThingViewModel">
+						<TextBlock Text="{Binding Text}"/>							
+					</DataTemplate>
+				</AutoCompleteBox.ItemTemplate>
+			</AutoCompleteBox>
+		
+			<TextBlock Text="{Binding SelectedC.Thing.name}" Width="320" Padding="4" Margin="16" Background="LightGray" VerticalAlignment="Center"/>
+		
+			<Button 
+				x:Name="firstC"
+				Content="Set First"
+				Tapped="SetFirstTapped"
+				Margin="16"
+			/>
+			<Button 
+				x:Name="lastC"				
 				Content="Set Last"
 				Tapped="SetLastTapped"
 				Margin="16"

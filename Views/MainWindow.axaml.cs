@@ -18,16 +18,31 @@ public partial class MainWindow : Window {
 	}
 	
 	private void SetLastTapped(object? sender, TappedEventArgs e) {
-		VM.Selected = (autoComplete.ItemsSource?.Cast<ThingViewModel>() ?? VM.MainVMs).LastOrDefault();
+		if (sender==lastA)
+			VM.SelectedA = (autoCompleteA.ItemsSource?.Cast<ThingViewModel>() ?? VM.MainVMs).LastOrDefault();
+		if (sender==lastB)
+			VM.SelectedB = (autoCompleteB.ItemsSource?.Cast<ThingViewModel>() ?? VM.MainVMs).LastOrDefault();
+		if (sender==lastC)
+			VM.SelectedC = (autoCompleteC.ItemsSource?.Cast<ThingViewModel>() ?? VM.MainVMs).LastOrDefault();
 	}
 
 	private void SetFirstTapped(object? sender, TappedEventArgs e) {
-		VM.Selected = (autoComplete.ItemsSource?.Cast<ThingViewModel>() ?? VM.MainVMs).FirstOrDefault();
+		if (sender==firstA)
+			VM.SelectedA = (autoCompleteA.ItemsSource?.Cast<ThingViewModel>() ?? VM.MainVMs).FirstOrDefault();
+		if (sender==firstB)
+			VM.SelectedB = (autoCompleteB.ItemsSource?.Cast<ThingViewModel>() ?? VM.MainVMs).FirstOrDefault();
+		if (sender==firstC)
+			VM.SelectedC = (autoCompleteC.ItemsSource?.Cast<ThingViewModel>() ?? VM.MainVMs).FirstOrDefault();
 	}
 
 	private void OnSelectionChanged(object? sender, SelectionChangedEventArgs e) {
 		var vm = e.AddedItems.Count > 0 ? e.AddedItems[0] : null;
-		VM.Selected = vm as ThingViewModel;
+		if (sender==autoCompleteA)
+			VM.SelectedA = vm as ThingViewModel;
+		if (sender==autoCompleteB)
+			VM.SelectedB = vm as ThingViewModel;
+		if (sender==autoCompleteC)
+			VM.SelectedC = vm as ThingViewModel;
 	}
 
 	private void AutoComplete_OnDropDownClosed(object? sender, EventArgs e) {
@@ -50,10 +65,15 @@ public partial class MainWindow : Window {
 		Log.Debug("AutoComplete_OnPopulated");
 	}
 
-	private void AutoComplete_A_OnPopulating(object? sender, PopulatingEventArgs e) {
+	private void AutoComplete_OnPopulating(object? sender, PopulatingEventArgs e) {
 		Log.Debug("AutoComplete_OnPopulating");
-		e.Cancel = true;
-		autoComplete.ItemsSource = VM.BuildAutoCompleteList(autoComplete.Text);
-		autoComplete.PopulateComplete();
 	}
+	
+	private void AutoComplete_C_OnPopulating(object? sender, PopulatingEventArgs e) {
+		Log.Debug("AutoComplete_C_OnPopulating");
+		e.Cancel = true;
+		autoCompleteC.ItemsSource = VM.BuildAutoCompleteList(autoCompleteC.Text);
+		autoCompleteC.PopulateComplete();
+	}
+
 }

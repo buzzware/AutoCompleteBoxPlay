@@ -25,11 +25,23 @@ public class MainWindowViewModel : BindableBase {
 	public ImmutableArray<ThingViewModel> RecentVMs { get; }
 	public ImmutableArray<ThingViewModel> MainVMs { get; }
 	
-	public ThingViewModel? Selected {
-		get => _Selected; 
-		set => SetProperty(ref _Selected, value);
+	public ThingViewModel? SelectedA {
+		get => _selectedA; 
+		set => SetProperty(ref _selectedA, value);
 	}
-	private ThingViewModel? _Selected;
+	private ThingViewModel? _selectedA;
+
+	public ThingViewModel? SelectedB {
+		get => _selectedB; 
+		set => SetProperty(ref _selectedB, value);
+	}
+	private ThingViewModel? _selectedB;
+
+	public ThingViewModel? SelectedC {
+		get => _selectedC; 
+		set => SetProperty(ref _selectedC, value);
+	}
+	private ThingViewModel? _selectedC;
 
 	public Func<string?, CancellationToken, Task<IEnumerable<object>>>? AutoCompletePopulator { get; }
 
