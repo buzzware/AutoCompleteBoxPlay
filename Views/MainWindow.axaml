@@ -1,0 +1,93 @@
+<Window xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:vm="using:AutoCompleteBoxPlay.ViewModels"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:assists="clr-namespace:AutoCompleteBoxPlay.Styles.Assists"
+	xmlns:behaviours="clr-namespace:CivtracSupervisor.Behaviours"
+	xmlns:models="clr-namespace:AutoCompleteBoxPlay.Models"
+	mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+	x:Class="AutoCompleteBoxPlay.Views.MainWindow"
+	x:DataType="vm:MainWindowViewModel"
+	Icon="/Assets/avalonia-logo.ico"
+	Title="AutoCompleteBoxPlay"
+>
+  <Design.DataContext>
+      <vm:MainWindowViewModel/>
+  </Design.DataContext>
+	<Window.DataContext>
+		<vm:MainWindowViewModel/>
+	</Window.DataContext>
+	<Window.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceInclude Source="../Styles/Resources/Themes/AutoCompleteBox.axaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Window.Resources>
+	
+	
+	
+	
+	<StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+	
+		<TextBlock Text="Avalonia AutoCompleteBox Play" HorizontalAlignment="Center"/>	
+	
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+		
+			<TextBlock Text="A) Populating+PopulateComplete :" Width="320" Padding="4" Margin="16" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+			
+			<AutoCompleteBox 
+				x:Name="autoComplete"
+				Width="320"
+				IsTextCompletionEnabled="True"
+				FilterMode="None"
+				SelectedItem="{Binding Selected, Mode=OneWay}"
+				SelectionChanged="OnSelectionChanged"
+				Theme="{StaticResource MaterialOutlineAutoCompleteBox}"
+				assists:AutoCompleteBoxAssist.Label="Birds"
+				DropDownClosed="AutoComplete_OnDropDownClosed"
+				DropDownOpened="AutoComplete_OnDropDownOpened"
+				DropDownClosing="AutoComplete_OnDropDownClosing"
+				DropDownOpening="AutoComplete_OnDropDownOpening"
+				Populated="AutoComplete_OnPopulated"
+				Populating="AutoComplete_A_OnPopulating"
+			>
+				<!--
+			AsyncPopulator="{Binding AutoCompletePopulator}"
+			-->
+			
+				<Interaction.Behaviors>
+					<behaviours:AutoCompleteDropdownBehaviour/>
+				</Interaction.Behaviors>
+			
+				<AutoCompleteBox.ItemTemplate>
+					<DataTemplate x:DataType="models:ThingViewModel">
+						<TextBlock Text="{Binding Text}"/>							
+					</DataTemplate>
+				</AutoCompleteBox.ItemTemplate>
+			</AutoCompleteBox>
+		
+			<TextBlock Text="{Binding Selected.Thing.name}" Width="320" Padding="4" Margin="16" Background="LightGray" VerticalAlignment="Center"/>
+		
+			<Button 
+				Content="Set First"
+				Tapped="SetFirstTapped"
+				Margin="16"
+			/>
+			<Button 
+				Content="Set Last"
+				Tapped="SetLastTapped"
+				Margin="16"
+			/>
+			
+		</StackPanel>
+		
+	
+	
+	
+	
+	
+	
+	</StackPanel>
+</Window>
